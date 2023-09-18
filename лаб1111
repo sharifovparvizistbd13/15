@@ -1,0 +1,19 @@
+def is_valid_binary(number):
+    # Проверяем, что в двоичной записи числа нет двух подряд идущих единиц
+    binary_str = bin(number)[2:]
+    return '11' not in binary_str
+
+def find_positions():
+    positions = []
+    for i in range(1, 4097):
+        if is_valid_binary(i):
+            positions.append(i)
+    return positions
+
+positions = find_positions()
+for position in positions:
+    binary_str = bin(position)[2:]
+    print(f"Число: {position}")
+    print(f"Двоичная запись: {binary_str.replace('1', '')}")
+    print(f"Позиция серии: {binary_str.find('11') + 1}")
+    print()
