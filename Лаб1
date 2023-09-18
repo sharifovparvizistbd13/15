@@ -1,17 +1,25 @@
-def find_max_and_position():
-    numbers = [1101, 1111, 110101, 110111, 111101, 101111, 111111, 100010101, 100010111, 100011101, 100011111, 100101011, 100101101, 100101111, 100110101, 100110111, 100111011, 100111101, 100111111, 101010101, 101010111, 101011011, 101011111, 101101011, 101101101, 101101111, 101110101, 101110111, 101111011, 101111101, 101111111]
-    max_num = 0
-    position = 0
-    for i, num in enumerate(numbers):
-        decimal_num = int(num, 2)
-        if decimal_num > max_num and '11' not in num[1:]:
-            max_num = decimal_num
-            position = num.index('11') + 1 if '11' in num else 0
-    return max_num, position
+def is_valid_binary(number):
+    # Функция для проверки, что число соответствует условиям задачи
+    if (i%2!=0):
+        binary_str = bin(number)[2:]
+        if (binary_str.count("11")==1):
+            return True
+        else:
+            return False
 
-max_num, position = find_max_and_position()
-print("The maximum number is", max_num)
-if position:
-    print("The series of two consecutive ones begins from the", str(position) + "th", "position.")
-else:
-    print("There is no series of two consecutive ones.")
+def find_series_position(number):
+    # Функция для поиска позиции, с которой начинается серия из двух подряд идущих единиц
+    binary_str = bin(number)[2:]
+    for i in range(1, len(binary_str)):
+        if binary_str[i] == '1' and binary_str[i-1] == '1':
+            return i
+    return None
+
+# Основная часть программы
+for i in range(1, 4097):
+    if is_valid_binary(i):
+        series_position = find_series_position(i)
+        binary_str = bin(i)[2:].replace('11', '')  # Удаление единиц из двоичного числа
+        print(f"Десятичное число: {i}, Двоичное число без единиц: {binary_str}")
+        if series_position is not None:
+            print(f"Серия из двух подряд идущих единиц начинается с позиции: {series_position}")
